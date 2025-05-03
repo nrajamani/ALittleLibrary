@@ -8,12 +8,19 @@ function App() {
   const [editBook, setEditBook] = useState(null);
   const [editTransaction, setEditTransaction] = useState(null);
 
-  const [filter, setFilter] = useState({
+  const initialFilter = {
     title: "", author: "", genre: "", availability: "",
     customer_name: "", email: "", transaction_book_title: "",
-    transaction_customer_name: "", date_borrowed: "",
-    date_returned: "", book_id: "", customer_id: "", transaction_id: ""
-  });
+    transaction_customer_name: "", date_borrowed: "", date_returned: "",
+    book_id: "", customer_id: "", transaction_id: ""
+  };
+
+  // const [filter, setFilter] = useState({
+  //   title: "", author: "", genre: "", availability: "",
+  //   customer_name: "", email: "", transaction_book_title: "",
+  //   transaction_customer_name: "", date_borrowed: "",
+  //   date_returned: "", book_id: "", customer_id: "", transaction_id: ""
+  // });
 
   const [book, setBook] = useState({
     title: "", author_first_name: "",
@@ -29,7 +36,8 @@ function App() {
     book_id: "", customer_id: "", date_borrowed: "", date_returned: "",
   });
 
-  const [appliedFilter, setAppliedFilter] = useState(filter);
+  const [filter, setFilter] = useState(initialFilter);
+  const [appliedFilter, setAppliedFilter] = useState(initialFilter);
   const [books, setBooks] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [transactions, setTransactions] = useState([]);
@@ -164,7 +172,8 @@ function App() {
           {/* ----- View Data ----- */}
           <Route path="/view" element={
             <div>
-              <select onChange={e => setView(e.target.value)} value={view}>
+              <select onChange={e => {const newView = e.target.value; setView(newView); 
+                setFilter(initialFilter); setAppliedFilter(initialFilter); }} value={view}>
                 <option value="books">View Books</option>
                 <option value="customers">View Customers</option>
                 <option value="transactions">View Transactions</option>
