@@ -331,7 +331,7 @@ def add_transaction():
         book_row = db.session.execute(
             text("SELECT availability FROM books WHERE book_id = :book_id"),
             {'book_id': data['book_id']}
-        ).fetchone()
+        ).mappings().fetchone()
         if not book_row:
             return jsonify({'error': 'Book not found'}), 404
         if not book_row['availability']:
@@ -470,7 +470,7 @@ def delete_transaction(transaction_id):
         tx = db.session.execute(
             text("SELECT book_id, date_returned FROM transactions WHERE transaction_id = :id"),
             {'id': transaction_id}
-        ).fetchone()
+        ).mappings().fetchone()
         if not tx:
             return jsonify({'error': 'Transaction not found'}), 404
 
